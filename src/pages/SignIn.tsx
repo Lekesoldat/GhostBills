@@ -67,7 +67,6 @@ const SignIn = () => {
             <FormControl isRequired>
               <FormLabel>Email</FormLabel>
               <Input
-                isRequired
                 name="email"
                 type="email"
                 placeholder="test@test.com"
@@ -78,6 +77,7 @@ const SignIn = () => {
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="*******"
                   size="lg"
