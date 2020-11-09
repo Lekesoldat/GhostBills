@@ -2,6 +2,7 @@ import firebase from "firebase";
 import React, { createContext, PropsWithChildren, useContext } from "react";
 import { Route, Switch } from "react-router";
 import { ProtectedRoute } from "../components/PrivateRoute";
+import ThemeToggler from "../components/ThemeToggler";
 import useFirebaseAuthentication from "../hooks/useFirebaseAuthentication";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
@@ -19,6 +20,7 @@ const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
 
   return (
     <AuthContext.Provider value={{ user }}>
+      <ThemeToggler />
       <Switch>
         <Route path="/sign-in" component={SignIn} />
         <Route path="/sign-up" component={SignUp} />
