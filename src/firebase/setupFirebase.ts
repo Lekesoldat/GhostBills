@@ -15,5 +15,9 @@ export const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-// firebase.analytics();
+
+if (process.env.NODE_ENV === "production") {
+  firebase.analytics();
+}
+
 firebase.auth();
