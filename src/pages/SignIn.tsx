@@ -81,6 +81,7 @@ const SignIn = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder="*******"
                   size="lg"
+                  ref={register}
                 />
                 <InputRightElement width="3rem">
                   <Button
