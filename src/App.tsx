@@ -16,11 +16,9 @@ const App = () => {
         <CSSReset />
         <Router>
           <AuthProvider>
-            <main>
-              <Switch>
-                <Route exact path="/" component={Home} />
-              </Switch>
-            </main>
+            <Switch>
+              <Route exact path="/" component={Home} />
+            </Switch>
           </AuthProvider>
         </Router>
       </ColorModeProvider>
