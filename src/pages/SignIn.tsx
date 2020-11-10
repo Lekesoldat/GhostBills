@@ -63,7 +63,7 @@ const SignIn = () => {
     <Flex width="full" align="center" justifyContent="center">
       <Box
         p={8}
-        maxWidth="800px"
+        minWidth={["80%", "80%", "50%", "25%"]}
         borderWidth={1}
         borderRadius={8}
         boxShadow="lg"
@@ -129,7 +129,7 @@ const SignIn = () => {
               )}
             </Button>
 
-            <Link href="/sign-up" color="teal">
+            <Link href="/sign-up" color="gray.500">
               <Text mt={6}>Don't have an account? Sign up!</Text>
             </Link>
           </form>
