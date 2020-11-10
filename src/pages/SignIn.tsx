@@ -4,17 +4,19 @@ import {
   CircularProgress,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Icon,
   Input,
   InputGroup,
   InputRightElement,
+  Link,
+  Text,
 } from "@chakra-ui/core";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
-import ErrorMessage from "../components/ErrorMessage";
 import { useAuth } from "../context/Authentication";
 import { signIn } from "../firebase/FirebaseAuthMethods";
 
@@ -23,11 +25,17 @@ interface Inputs {
   password: string;
 }
 
+const signInErrors = {
+  "auth/user-not-found": "email",
+  "auth/wrong-password": "password",
+} as const;
+
+type SignInErrors = keyof typeof signInErrors;
+
 const SignIn = () => {
   const { user } = useAuth();
-  const { register, handleSubmit, watch } = useForm<Inputs>();
+  const { register, handleSubmit, watch, errors, setError } = useForm<Inputs>();
 
-  const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -39,12 +47,14 @@ const SignIn = () => {
       await signIn(email, password);
       setLoading(false);
     } catch (err) {
-      setError(err.message);
       setLoading(false);
+      setError(signInErrors[err.code as SignInErrors], {
+        type: "manual",
+        message: err.message,
+      });
     }
   };
 
-  // Redirect to Home if authenticated.
   if (user) {
     return <Redirect to="/" />;
   }
@@ -53,7 +63,7 @@ const SignIn = () => {
     <Flex width="full" align="center" justifyContent="center">
       <Box
         p={8}
-        maxWidth="500px"
+        maxWidth="800px"
         borderWidth={1}
         borderRadius={8}
         boxShadow="lg"
@@ -63,18 +73,23 @@ const SignIn = () => {
         </Box>
         <Box my={4} textAlign="left">
           <form onSubmit={handleSubmit(onSubmit)}>
-            {error && <ErrorMessage message={error} />}
-            <FormControl isRequired>
-              <FormLabel>Email</FormLabel>
+            <FormControl isRequired isInvalid={errors.email ? true : false}>
+              <FormLabel htmlFor="email">Email</FormLabel>
               <Input
                 name="email"
                 type="email"
                 placeholder="test@test.com"
                 ref={register}
               />
+              <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
             </FormControl>
-            <FormControl isRequired mt={6}>
-              <FormLabel>Password</FormLabel>
+
+            <FormControl
+              isRequired
+              mt={6}
+              isInvalid={errors.password ? true : false}
+            >
+              <FormLabel htmlFor="password">Password</FormLabel>
               <InputGroup>
                 <Input
                   name="password"
@@ -97,7 +112,9 @@ const SignIn = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
+
             <Button
               variantColor="teal"
               variant="outline"
@@ -111,6 +128,10 @@ const SignIn = () => {
                 "Sign In"
               )}
             </Button>
+
+            <Link href="/sign-up" color="teal">
+              <Text mt={6}>Don't have an account? Sign up!</Text>
+            </Link>
           </form>
         </Box>
       </Box>
