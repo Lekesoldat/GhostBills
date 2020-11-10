@@ -5,7 +5,7 @@ import useUser from "../hooks/useUser";
 
 const Home = () => {
   const user = useUser();
-  const [subscriptions, setSubscriptions] = useState<any | undefined>();
+  const [subscriptions, setSubscriptions] = useState<any[] | undefined>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +18,10 @@ const Home = () => {
 
   if (!subscriptions) {
     return <CircularProgress isIndeterminate />;
+  }
+
+  if (subscriptions.length < 1) {
+    return <div>No data!</div>;
   }
 
   return (
