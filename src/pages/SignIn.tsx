@@ -69,7 +69,7 @@ const SignIn = () => {
         boxShadow="lg"
       >
         <Box textAlign="center">
-          <Heading>Login</Heading>
+          <Heading>Sign In</Heading>
         </Box>
         <Box my={4} textAlign="left">
           <form onSubmit={handleSubmit(onSubmit)}>
