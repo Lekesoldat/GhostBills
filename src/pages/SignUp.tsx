@@ -71,7 +71,7 @@ const SignUp = () => {
         </Box>
         <Box my={4} textAlign="left">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl isRequired isInvalid={errors.username ? true : false}>
+            <FormControl isRequired isInvalid={!!errors.username}>
               <FormLabel htmlFor="username">Username</FormLabel>
               <Input
                 name="username"
@@ -82,11 +82,7 @@ const SignUp = () => {
               <FormErrorMessage>{errors.username?.message}</FormErrorMessage>
             </FormControl>
 
-            <FormControl
-              pt={6}
-              isRequired
-              isInvalid={errors.email ? true : false}
-            >
+            <FormControl pt={6} isRequired isInvalid={!!errors.email}>
               <FormLabel htmlFor="email">Email</FormLabel>
               <Input
                 name="email"
@@ -118,7 +114,7 @@ const SignUp = () => {
             <FormControl
               isRequired
               mt={6}
-              isInvalid={errors.repeatedPassword ? true : false}
+              isInvalid={!!errors.repeatedPassword}
             >
               <FormLabel htmlFor="repeatedPassword">Repeat password</FormLabel>
               <InputGroup>

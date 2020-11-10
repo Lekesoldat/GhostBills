@@ -11,22 +11,20 @@ import Home from "./pages/Home";
 
 const App = () => {
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <ColorModeProvider>
-          <CSSReset />
-          <Router>
-            <AuthProvider>
-              <main>
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                </Switch>
-              </main>
-            </AuthProvider>
-          </Router>
-        </ColorModeProvider>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={theme}>
+      <ColorModeProvider>
+        <CSSReset />
+        <Router>
+          <AuthProvider>
+            <main>
+              <Switch>
+                <Route exact path="/" component={Home} />
+              </Switch>
+            </main>
+          </AuthProvider>
+        </Router>
+      </ColorModeProvider>
+    </ThemeProvider>
   );
 };
 

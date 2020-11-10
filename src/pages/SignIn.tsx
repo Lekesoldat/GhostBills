@@ -73,7 +73,7 @@ const SignIn = () => {
         </Box>
         <Box my={4} textAlign="left">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl isRequired isInvalid={errors.email ? true : false}>
+            <FormControl isRequired isInvalid={!!errors.email}>
               <FormLabel htmlFor="email">Email</FormLabel>
               <Input
                 name="email"
@@ -84,11 +84,7 @@ const SignIn = () => {
               <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
             </FormControl>
 
-            <FormControl
-              isRequired
-              mt={6}
-              isInvalid={errors.password ? true : false}
-            >
+            <FormControl isRequired mt={6} isInvalid={!!errors.password}>
               <FormLabel htmlFor="password">Password</FormLabel>
               <InputGroup>
                 <Input
