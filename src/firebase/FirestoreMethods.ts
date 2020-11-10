@@ -1,14 +1,14 @@
 import firebase from "firebase";
 import Subscription from "../typeDefs";
 
-export const getSubscriptions = (userId: string) =>
-  firebase
+export const getSubscriptions = async (userId: string) => {
+  const response = await firebase
     .firestore()
     .collection(`users/${userId}/subscriptions`)
-    .get()
-    .then((snapshot) =>
-      snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-    );
+    .get();
+
+  return response.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
 
 export const createSubscription = (
   userId: string,
