@@ -5,6 +5,7 @@ import useUser from "../hooks/useUser";
 
 const Home = () => {
   const user = useUser();
+  
   const [subscriptions, setSubscriptions] = useState<any[] | undefined>();
 
   useEffect(() => {
