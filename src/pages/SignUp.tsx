@@ -41,8 +41,14 @@ const SignUp = () => {
 
   const onSubmit = async ({ username, email, password }: Inputs) => {
     setLoading(true);
+    const proceed = window.confirm(
+      "This project is a work in progress, do you wish to proceed?"
+    );
+
     try {
-      await signUp(username, email, password);
+      if (proceed) {
+        await signUp(username, email, password);
+      }
       setLoading(false);
     } catch (err) {
       setLoading(false);
