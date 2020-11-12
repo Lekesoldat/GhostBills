@@ -27,7 +27,7 @@ export const createSubscription = async (
   const userFields = (await user.get()).data();
 
   if (!userFields) {
-    throw "userFields not found!";
+    throw new Error("userFields not found!");
   }
 
   // Aggreate user fields
@@ -48,6 +48,7 @@ export const createSubscription = async (
   await user.collection("subscriptions").add(newSubscription);
 };
 
+// TODO: Handle change of recurring
 export const updateSubscription = async (
   userId: string,
   docId: string,
@@ -62,11 +63,11 @@ export const updateSubscription = async (
   const userFields = (await user.get()).data();
 
   if (!userFields) {
-    throw "userFields not found!";
+    throw new Error("userFields not found!");
   }
 
   if (!oldSubscription) {
-    throw "oldSubscription not found!";
+    throw new Error("oldSubscription not found!");
   }
 
   // Aggreate user fields
@@ -75,7 +76,7 @@ export const updateSubscription = async (
   )) {
     if (userFields[key]) {
       // Don't update same value.
-      if (oldSubscription[key] == value) {
+      if (oldSubscription[key] === value) {
         return;
       } else {
         // Add or subtract depending if value increases or decreases
@@ -100,7 +101,7 @@ export const deleteSubscription = async (
   const userFields = (await user.get()).data();
 
   if (!userFields) {
-    throw "userFields not found!";
+    throw new Error("userFields not found!");
   }
 
   // Decrease user fields
