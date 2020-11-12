@@ -49,7 +49,6 @@ const SignUp = () => {
       if (proceed) {
         await signUp(username, email, password);
       }
-      setLoading(false);
     } catch (err) {
       setLoading(false);
       setError(signupErrors[err.code as SignupErrors], {
