@@ -11,6 +11,13 @@ export const getSubscriptions = async (userId: string) => {
   return response.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
 
+export const getSubscription = (userId: string, docId: string) =>
+  firebase
+    .firestore()
+    .collection(`users/${userId}/subscriptions/${docId}`)
+    .doc(docId)
+    .get();
+
 export const createSubscription = async (
   userId: string,
   newSubscription: Subscription
@@ -23,7 +30,7 @@ export const createSubscription = async (
     throw "userFields not found!";
   }
 
-  // Update user fields
+  // Aggreate user fields
   for (const [key, value] of Object.entries(
     calculateTotals(newSubscription.recurring, newSubscription.cost)
   )) {
@@ -34,6 +41,7 @@ export const createSubscription = async (
     }
   }
 
+  // Update user fields
   await user.update(userFields);
 
   // Add subscription
@@ -47,23 +55,38 @@ export const updateSubscription = async (
 ) => {
   const user = firebase.firestore().collection("users").doc(userId);
 
+  const oldSubscription = (
+    await user.collection("subscriptions").doc(docId).get()
+  ).data();
+
   const userFields = (await user.get()).data();
 
   if (!userFields) {
     throw "userFields not found!";
   }
 
-  // Update user fields
+  if (!oldSubscription) {
+    throw "oldSubscription not found!";
+  }
+
+  // Aggreate user fields
   for (const [key, value] of Object.entries(
     calculateTotals(updatedSubscription.recurring, updatedSubscription.cost)
   )) {
     if (userFields[key]) {
-      userFields[key] -= value;
+      // Don't update same value.
+      if (oldSubscription[key] == value) {
+        return;
+      } else {
+        // Add or subtract depending if value increases or decreases
+        userFields[key] += value > oldSubscription[key] ? value : -value;
+      }
     }
   }
 
   await user.update(userFields);
 
+  // Update supbscription
   await user.collection("subscriptions").doc(docId).update(updatedSubscription);
 };
 
@@ -80,7 +103,7 @@ export const deleteSubscription = async (
     throw "userFields not found!";
   }
 
-  // Update user fields
+  // Decrease user fields
   for (const [key, value] of Object.entries(
     calculateTotals(deletedSubscription.recurring, deletedSubscription.cost)
   )) {
@@ -89,15 +112,9 @@ export const deleteSubscription = async (
     }
   }
 
+  // Update user fields
   await user.update(userFields);
 
   // Delete subscription
   await user.collection("subscriptions").doc(docId).delete();
 };
-
-export const getSubscription = (userId: string, docId: string) =>
-  firebase
-    .firestore()
-    .collection(`users/${userId}/subscriptions/${docId}`)
-    .doc(docId)
-    .get();
