@@ -34,7 +34,7 @@ type SignInErrors = keyof typeof signInErrors;
 
 const SignIn = () => {
   const { user } = useAuth();
-  const { register, handleSubmit, watch, errors, setError } = useForm<Inputs>();
+  const { register, handleSubmit, errors, setError } = useForm<Inputs>();
 
   const [isLoading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
