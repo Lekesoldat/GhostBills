@@ -2,13 +2,21 @@ import firebase from "firebase";
 import { Subscription } from "../typeDefs";
 import { calculateTotals } from "../utils";
 
-export const getSubscriptions = async (userId: string) => {
+export const getSubscriptions = async (
+  userId: string
+): Promise<Subscription[]> => {
   const response = await firebase
     .firestore()
     .collection(`users/${userId}/subscriptions`)
     .get();
 
-  return response.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  return response.docs.map(
+    (doc) =>
+      ({
+        id: doc.id,
+        ...doc.data(),
+      } as Subscription)
+  );
 };
 
 export const getSubscription = (userId: string, docId: string) =>

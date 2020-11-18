@@ -11,7 +11,7 @@ import {
   InputGroup,
   Link,
   Text,
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
@@ -143,7 +143,7 @@ const SignUp = () => {
             </FormControl>
 
             <Button
-              variantColor="teal"
+              colorScheme="teal"
               variant="outline"
               type="submit"
               width="full"

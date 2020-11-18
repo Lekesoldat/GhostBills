@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/core";
+import { Flex } from "@chakra-ui/react";
 import firebase from "firebase";
 import React, { createContext, PropsWithChildren, useContext } from "react";
 import { Route, Switch } from "react-router";
@@ -24,7 +24,7 @@ const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
       <Flex justifyContent="center" direction="column" minHeight="100vh">
         <Navigation />
 
-        <Flex flex={1} minWidth="full" justifyContent="center" bg="red.500">
+        <Flex flex={1} minWidth="full" justifyContent="center">
           <Switch>
             <Route path="/sign-in" component={SignIn} />
             <Route path="/sign-up" component={SignUp} />

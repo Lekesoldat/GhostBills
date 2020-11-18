@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertIcon, Box } from "@chakra-ui/core";
+import { Alert, AlertDescription, AlertIcon, Box } from "@chakra-ui/react";
 import React from "react";
 
 const ErrorMessage = ({ message }: { message: string }) => (

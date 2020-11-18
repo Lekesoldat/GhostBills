@@ -5,7 +5,7 @@ import {
   StatHelpText,
   StatLabel,
   StatNumber,
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getSubscriptionTotals } from "../firebase/FirestoreMethods";
 import useUser from "../hooks/useUser";

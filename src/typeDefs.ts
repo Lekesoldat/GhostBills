@@ -1,4 +1,5 @@
 export type Subscription = {
+  id?: string;
   name: string;
   cost: number;
   recurring: "daily" | "weekly" | "monthly" | "yearly";

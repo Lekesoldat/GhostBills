@@ -1,5 +1,6 @@
-import { Flex, IconButton } from "@chakra-ui/core";
+import { Flex, IconButton } from "@chakra-ui/react";
 import React from "react";
+import { FaLock } from "react-icons/fa";
 import { signOut } from "../firebase/FirebaseAuthMethods";
 import useUser from "../hooks/useUser";
 import ThemeToggler from "./ThemeToggler";
@@ -15,7 +16,7 @@ const Navigation = () => {
           <IconButton
             ml={1}
             aria-label=""
-            icon="lock"
+            icon={<FaLock />}
             color="yellow"
             onClick={signOut}
             variant="outline"
