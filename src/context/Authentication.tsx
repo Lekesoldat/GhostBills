@@ -21,13 +21,16 @@ const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
 
   return (
     <AuthContext.Provider value={{ user }}>
-      <Navigation />
-      <Flex justifyContent="center">
-        <Switch>
-          <Route path="/sign-in" component={SignIn} />
-          <Route path="/sign-up" component={SignUp} />
-          <ProtectedRoute path="*">{children}</ProtectedRoute>
-        </Switch>
+      <Flex justifyContent="center" direction="column" minHeight="100vh">
+        <Navigation />
+
+        <Flex flex={1} minWidth="full" justifyContent="center" bg="red.500">
+          <Switch>
+            <Route path="/sign-in" component={SignIn} />
+            <Route path="/sign-up" component={SignUp} />
+            <ProtectedRoute path="*">{children}</ProtectedRoute>
+          </Switch>
+        </Flex>
       </Flex>
     </AuthContext.Provider>
   );
