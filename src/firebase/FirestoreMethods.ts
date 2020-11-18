@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import Subscription from "../typeDefs";
+import { Subscription } from "../typeDefs";
 import { calculateTotals } from "../utils";
 
 export const getSubscriptions = async (userId: string) => {
@@ -17,6 +17,22 @@ export const getSubscription = (userId: string, docId: string) =>
     .collection(`users/${userId}/subscriptions/${docId}`)
     .doc(docId)
     .get();
+
+export const getSubscriptionTotals = async (userId: string) => {
+  const user = firebase.firestore().collection("users").doc(userId);
+  const userFields = (await user.get()).data();
+
+  if (!userFields) {
+    return null;
+  }
+
+  return {
+    yearly: userFields["yearly"],
+    monthly: userFields["monthly"],
+    weekly: userFields["weekly"],
+    daily: userFields["daily"],
+  };
+};
 
 export const createSubscription = async (
   userId: string,
@@ -46,6 +62,8 @@ export const createSubscription = async (
 
   // Add subscription
   await user.collection("subscriptions").add(newSubscription);
+
+  console.log("Subscription created!");
 };
 
 // TODO: Handle change of recurring
@@ -85,10 +103,13 @@ export const updateSubscription = async (
     }
   }
 
+  // Update user fields
   await user.update(userFields);
 
   // Update supbscription
   await user.collection("subscriptions").doc(docId).update(updatedSubscription);
+
+  console.log("Subscription updated!");
 };
 
 export const deleteSubscription = async (
@@ -118,4 +139,6 @@ export const deleteSubscription = async (
 
   // Delete subscription
   await user.collection("subscriptions").doc(docId).delete();
+
+  console.log("Subscription deleted!");
 };
