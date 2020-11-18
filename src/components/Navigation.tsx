@@ -8,12 +8,6 @@ const Navigation = () => {
   const user = useUser();
   return (
     <Flex alignItems="center" justifyContent="flex-end" p={"1rem"}>
-      {/* <Box>
-        <Link href="/">
-          <Image src="./logo_no_text.png" alt="Logo" size="75px" />
-        </Link>
-      </Box> */}
-
       <Flex direction="row">
         <ThemeToggler />
 
