@@ -122,7 +122,6 @@ export const updateSubscription = async (
 
 export const deleteSubscription = async (
   userId: string,
-  docId: string,
   deletedSubscription: Subscription
 ) => {
   const user = firebase.firestore().collection("users").doc(userId);
@@ -146,7 +145,7 @@ export const deleteSubscription = async (
   await user.update(userFields);
 
   // Delete subscription
-  await user.collection("subscriptions").doc(docId).delete();
+  await user.collection("subscriptions").doc(deletedSubscription.id).delete();
 
   console.log("Subscription deleted!");
 };
