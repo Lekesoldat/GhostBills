@@ -98,8 +98,6 @@ const SubscriptionList = () => {
     // fetchSubscriptions();
   }, []);
 
-  console.log(subscriptions);
-
   if (subscriptions === null) {
     return <CircularProgress isIndeterminate />;
   }
@@ -107,7 +105,7 @@ const SubscriptionList = () => {
   return (
     <Box>
       {subscriptions.map((sub) => (
-        <SubscriptionCard data={sub} />
+        <SubscriptionCard key={sub.id} data={sub} />
       ))}
     </Box>
   );
