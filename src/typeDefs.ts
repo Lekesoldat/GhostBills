@@ -2,9 +2,17 @@ export type Subscription = {
   id?: string;
   name: string;
   cost: number;
-  recurring: "daily" | "weekly" | "monthly" | "yearly";
-  type: "entertainment" | "administrative" | "productivity" | "training";
+  recurring: SubscriptionRecurrence;
+  type: SubscriptionType;
 };
+
+export type SubscriptionType =
+  | "entertainment"
+  | "administrative"
+  | "productivity"
+  | "training";
+
+export type SubscriptionRecurrence = "daily" | "weekly" | "monthly" | "yearly";
 
 export interface SubscriptionTotals {
   yearly: number;
