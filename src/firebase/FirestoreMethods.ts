@@ -35,10 +35,10 @@ export const getSubscriptionTotals = async (userId: string) => {
   }
 
   return {
-    yearly: userFields["yearly"],
-    monthly: userFields["monthly"],
-    weekly: userFields["weekly"],
-    daily: userFields["daily"],
+    yearly: parseFloat(userFields["yearly"]),
+    monthly: parseFloat(userFields["monthly"]),
+    weekly: parseFloat(userFields["weekly"]),
+    daily: parseFloat(userFields["daily"]),
   };
 };
 
@@ -59,9 +59,9 @@ export const createSubscription = async (
     calculateTotals(newSubscription.recurring, newSubscription.cost)
   )) {
     if (userFields[key]) {
-      userFields[key] += value;
+      userFields[key] = (parseFloat(userFields[key]) + value).toString();
     } else {
-      userFields[key] = value;
+      userFields[key] = value.toString();
     }
   }
 
@@ -74,7 +74,6 @@ export const createSubscription = async (
   console.log("Subscription created!");
 };
 
-// TODO: Handle change of recurring
 export const updateSubscription = async (
   userId: string,
   docId: string,
@@ -100,14 +99,16 @@ export const updateSubscription = async (
   for (const [key, value] of Object.entries(
     calculateTotals(updatedSubscription.recurring, updatedSubscription.cost)
   )) {
-    if (userFields[key]) {
-      // Don't update same value.
-      if (oldSubscription[key] === value) {
-        return;
-      } else {
-        // Add or subtract depending if value increases or decreases
-        userFields[key] += value > oldSubscription[key] ? value : -value;
-      }
+    // Don't update same value.
+    if (parseFloat(oldSubscription[key]) == value) {
+      return;
+    } else {
+      // Add or subtract depending if value increases or decreases
+      userFields[key] = (parseFloat(userFields[key]) + value >
+      oldSubscription[key]
+        ? value
+        : -value
+      ).toString();
     }
   }
 
