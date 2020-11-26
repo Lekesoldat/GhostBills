@@ -3,9 +3,7 @@ import React from "react";
 import NewSubscriptionDrawer from "../components/NewSubscriptionDrawer";
 import SubscriptionList from "../components/SubscriptionList";
 import TotalBar from "../components/TotalBar";
-import useUser from "../hooks/useUser";
 const Home = () => {
-  const user = useUser();
   return (
     <Box borderRadius="lg" borderWidth="1px" width="80%" textAlign="center">
       <Text textAlign="center">
