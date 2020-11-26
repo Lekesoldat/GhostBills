@@ -97,11 +97,9 @@ export const useDatastore = () => useContext(DataStoreContext)!;
 
 const DatastoreProvider = ({ children }: PropsWithChildren<{}>) => {
   const user = useUser();
-  const [totals, setTotals] = useState<SubscriptionTotals | null>(
-    initialTotals
-  );
+  const [totals, setTotals] = useState<SubscriptionTotals | null>(null);
   const [subscriptions, setSubscriptions] = useState<Subscription[] | null>(
-    initialSubs
+    null
   );
 
   const updateTotals = async () => {
