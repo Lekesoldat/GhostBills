@@ -102,14 +102,14 @@ export const updateSubscription = async (
     // Don't update same value.
     if (parseFloat(oldSubscription[key]) == value) {
       return;
-    } else {
-      // Add or subtract depending if value increases or decreases
-      userFields[key] = (parseFloat(userFields[key]) + value >
-      oldSubscription[key]
-        ? value
-        : -value
-      ).toString();
     }
+
+    // Add or subtract depending if value increases or decreases
+    userFields[key] = (parseFloat(userFields[key]) + value >
+    oldSubscription[key]
+      ? value
+      : -value
+    ).toString();
   }
 
   // Update user fields
