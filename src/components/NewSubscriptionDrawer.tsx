@@ -19,6 +19,7 @@ import _ from "lodash";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
+import { useDatastore } from "../context/Datastore";
 import { createSubscription } from "../firebase/FirestoreMethods";
 import useUser from "../hooks/useUser";
 import {
@@ -29,8 +30,9 @@ import {
 
 const NewSubscriptionDrawer = () => {
   const user = useUser();
+  const { updateDatastore } = useDatastore();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { register, handleSubmit, errors, setError } = useForm<Subscription>();
+  const { register, handleSubmit, errors } = useForm<Subscription>();
   const [loading, setLoading] = useState(false);
   const btnRef = React.useRef<HTMLButtonElement>(null);
 
@@ -39,6 +41,7 @@ const NewSubscriptionDrawer = () => {
     try {
       await createSubscription(user.uid, data);
       setLoading(false);
+      updateDatastore();
       onClose();
     } catch (err) {
       setLoading(false);
