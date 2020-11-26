@@ -6,13 +6,19 @@ export type Subscription = {
   type: SubscriptionType;
 };
 
-export type SubscriptionType =
-  | "entertainment"
-  | "administrative"
-  | "productivity"
-  | "training";
+export enum SubscriptionType {
+  ENTERTAINMENT = "entertainment",
+  ADMINISTRATIVE = "administrative",
+  PRODUCTIVITY = "productivity",
+  TRAINING = "training",
+}
 
-export type SubscriptionRecurrence = "daily" | "weekly" | "monthly" | "yearly";
+export enum SubscriptionRecurrence {
+  DAILY = "daily",
+  WEEKLY = "weekly",
+  MONTHLY = "monthly",
+  YEARLY = "yearly",
+}
 
 export interface SubscriptionTotals {
   yearly: number;
