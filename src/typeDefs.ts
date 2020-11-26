@@ -7,17 +7,17 @@ export type Subscription = {
 };
 
 export enum SubscriptionType {
-  ENTERTAINMENT = "entertainment",
-  ADMINISTRATIVE = "administrative",
-  PRODUCTIVITY = "productivity",
-  TRAINING = "training",
+  Entertainment = "entertainment",
+  Administrative = "administrative",
+  Productivity = "productivity",
+  Training = "training",
 }
 
 export enum SubscriptionRecurrence {
-  DAILY = "daily",
-  WEEKLY = "weekly",
-  MONTHLY = "monthly",
-  YEARLY = "yearly",
+  Daily = "daily",
+  Weekly = "weekly",
+  Monthly = "monthly",
+  Yearly = "yearly",
 }
 
 export interface SubscriptionTotals {

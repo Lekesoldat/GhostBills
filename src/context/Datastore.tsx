@@ -29,57 +29,57 @@ const initialSubs = [
     id: "6vIrGNJ2ydVRDanQKZWw",
     name: "Bear Pro",
     cost: 149,
-    type: SubscriptionType.PRODUCTIVITY,
-    recurring: SubscriptionRecurrence.YEARLY,
+    type: SubscriptionType.Productivity,
+    recurring: SubscriptionRecurrence.Yearly,
   },
   {
     id: "HAf9o9CJ3L9pzrz4vy4o",
     name: "iCloud",
     cost: 10,
-    type: SubscriptionType.ADMINISTRATIVE,
-    recurring: SubscriptionRecurrence.MONTHLY,
+    type: SubscriptionType.Administrative,
+    recurring: SubscriptionRecurrence.Monthly,
   },
   {
     id: "PKOMjQnE35qBh4jeby5B",
     name: "1Password",
     cost: 27,
-    type: SubscriptionType.ADMINISTRATIVE,
-    recurring: SubscriptionRecurrence.MONTHLY,
+    type: SubscriptionType.Administrative,
+    recurring: SubscriptionRecurrence.Monthly,
   },
   {
     id: "RpcUQD3A1bw5ODxDNpMn",
     name: "Spotify",
     cost: 25,
-    type: SubscriptionType.ENTERTAINMENT,
-    recurring: SubscriptionRecurrence.MONTHLY,
+    type: SubscriptionType.Entertainment,
+    recurring: SubscriptionRecurrence.Monthly,
   },
   {
     id: "Y4IqFxI121cVXvk6FPwJ",
     cost: 29,
     name: "TickTick",
-    type: SubscriptionType.PRODUCTIVITY,
-    recurring: SubscriptionRecurrence.MONTHLY,
+    type: SubscriptionType.Productivity,
+    recurring: SubscriptionRecurrence.Monthly,
   },
   {
     id: "gNdaDMXEzsFRhk5aZRB4",
     name: "Impulse",
     cost: 299,
-    type: SubscriptionType.TRAINING,
-    recurring: SubscriptionRecurrence.MONTHLY,
+    type: SubscriptionType.Training,
+    recurring: SubscriptionRecurrence.Monthly,
   },
   {
     id: "kU6z1Jd0ATszp8eJzEU5",
     name: "PlayStation Plus",
     cost: 580,
-    type: SubscriptionType.ENTERTAINMENT,
-    recurring: SubscriptionRecurrence.MONTHLY,
+    type: SubscriptionType.Entertainment,
+    recurring: SubscriptionRecurrence.Monthly,
   },
   {
     id: "uaLVuIiBvzykGdDYCY0A",
     name: "Netflix",
     cost: 28,
-    type: SubscriptionType.ENTERTAINMENT,
-    recurring: SubscriptionRecurrence.MONTHLY,
+    type: SubscriptionType.Entertainment,
+    recurring: SubscriptionRecurrence.Monthly,
   },
 ];
 
@@ -97,14 +97,16 @@ export const useDatastore = () => useContext(DataStoreContext)!;
 
 const DatastoreProvider = ({ children }: PropsWithChildren<{}>) => {
   const user = useUser();
-  const [totals, setTotals] = useState<SubscriptionTotals | null>(null);
+  const [totals, setTotals] = useState<SubscriptionTotals | null>(
+    initialTotals
+  );
   const [subscriptions, setSubscriptions] = useState<Subscription[] | null>(
-    null
+    initialSubs
   );
 
   const updateTotals = async () => {
+    console.log("♻️ updating totals..");
     try {
-      console.log("Fetching totals");
       const totals = await getSubscriptionTotals(user.uid);
       setTotals(totals);
     } catch (err) {
@@ -113,6 +115,7 @@ const DatastoreProvider = ({ children }: PropsWithChildren<{}>) => {
   };
 
   const updateSubscriptions = async () => {
+    console.log("♻️ updating subscriptions..");
     try {
       const subs = await getSubscriptions(user.uid);
       setSubscriptions(subs);
@@ -122,6 +125,7 @@ const DatastoreProvider = ({ children }: PropsWithChildren<{}>) => {
   };
 
   const updateDatastore = async () => {
+    console.log("♻️ updating datastore..");
     await updateTotals();
     await updateSubscriptions();
   };
@@ -131,7 +135,7 @@ const DatastoreProvider = ({ children }: PropsWithChildren<{}>) => {
     const fetchData = async () => {
       await updateDatastore();
     };
-    // fetchData();
+    fetchData();
   }, []);
 
   return (
