@@ -6,34 +6,13 @@ import {
   StatLabel,
   StatNumber,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { getSubscriptionTotals } from "../firebase/FirestoreMethods";
-import useUser from "../hooks/useUser";
-import { SubscriptionTotals } from "../typeDefs";
-
-const initialValues = {
-  daily: 15.74,
-  monthly: 478.75,
-  weekly: 110.48,
-  yearly: 5745,
-};
+import React from "react";
+import { useDatastore } from "../context/Datastore";
 
 const TotalBar = () => {
-  const user = useUser();
-  const [fields, setFields] = useState<SubscriptionTotals | null>(
-    initialValues
-  );
+  const { totals } = useDatastore();
 
-  useEffect(() => {
-    const fetchUserFields = async () => {
-      const totals = await getSubscriptionTotals(user.uid);
-      setFields(totals);
-    };
-
-    // fetchUserFields();
-  }, []);
-
-  if (!fields) {
+  if (!totals) {
     return <CircularProgress isIndeterminate />;
   }
 
@@ -57,7 +36,7 @@ const TotalBar = () => {
         p={2}
       >
         <StatLabel>Yearly</StatLabel>
-        <StatNumber>{fields.yearly}</StatNumber>
+        <StatNumber>{totals.yearly}</StatNumber>
         <StatHelpText>NOK</StatHelpText>
       </Stat>
 
@@ -69,19 +48,19 @@ const TotalBar = () => {
         p={2}
       >
         <StatLabel>Monthly</StatLabel>
-        <StatNumber>{fields.monthly}</StatNumber>
+        <StatNumber>{totals.monthly}</StatNumber>
         <StatHelpText>NOK</StatHelpText>
       </Stat>
 
       <Stat d="flex" justifyContent="center" borderRight="2px solid pink" p={2}>
         <StatLabel>Weekly</StatLabel>
-        <StatNumber>{fields.weekly}</StatNumber>
+        <StatNumber>{totals.weekly}</StatNumber>
         <StatHelpText>NOK</StatHelpText>
       </Stat>
 
       <Stat d="flex" justifyContent="center" p={2}>
         <StatLabel>Daily</StatLabel>
-        <StatNumber>{fields.daily}</StatNumber>
+        <StatNumber>{totals.daily}</StatNumber>
         <StatHelpText>NOK</StatHelpText>
       </Stat>
     </StatGroup>
