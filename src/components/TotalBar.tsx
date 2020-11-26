@@ -11,14 +11,18 @@ import { getSubscriptionTotals } from "../firebase/FirestoreMethods";
 import useUser from "../hooks/useUser";
 import { SubscriptionTotals } from "../typeDefs";
 
+const initialValues = {
+  daily: 15.74,
+  monthly: 478.75,
+  weekly: 110.48,
+  yearly: 5745,
+};
+
 const TotalBar = () => {
   const user = useUser();
-  const [fields, setFields] = useState<SubscriptionTotals | null>({
-    daily: 15.74,
-    monthly: 478.75,
-    weekly: 110.48,
-    yearly: 5745,
-  });
+  const [fields, setFields] = useState<SubscriptionTotals | null>(
+    initialValues
+  );
 
   useEffect(() => {
     const fetchUserFields = async () => {
@@ -42,15 +46,14 @@ const TotalBar = () => {
       }}
       borderWidth="1px"
       borderRadius="lg"
-      justifyContent="space-between"
       p={5}
       m={5}
     >
       <Stat
         d="flex"
         justifyContent="center"
-        borderBottom={{ base: "2px solid pink", md: "none" }}
         borderRight="2px solid pink"
+        borderBottom={{ base: "2px solid pink", md: "none" }}
         p={2}
       >
         <StatLabel>Yearly</StatLabel>
